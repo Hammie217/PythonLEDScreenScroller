@@ -32,29 +32,29 @@ class display:
         self.rotateDelay = speed
     
 
-    def rotate(self):
-        while True:
-            sleep(self.rotateDelay)     
-            self.printVisibleScreen()
+    def rotate(self,toRotate = -1):
+        runs =0
+        while ((runs< toRotate)or (toRotate<0)):
+            sleep(self.rotateDelay)   
 
-    def printVisibleScreen(self):
-        if self.rotatedCount>=(self.screenWidth-self.displaySize):
-            self.rotatedCount=0;
+            if self.rotatedCount>=(self.screenWidth-self.displaySize):
+                self.rotatedCount=0;
+                runs +=1
 
-        if self.displaySize>self.screenWidth:
-            smalVal = self.screenWidth
-        else:
-            smalVal = self.displaySize
-        
-        for y in range (0,8):
-            for x in range(self.rotatedCount,smalVal+self.rotatedCount):
-                if self.screen[y][x]==1:
-                    print("#", end='')
-                else:
-                    print(" ", end='')
-            print("")
-        
-        self.rotatedCount +=1
+            if self.displaySize>self.screenWidth:
+                smalVal = self.screenWidth
+            else:
+                smalVal = self.displaySize
+            
+            for y in range (0,8):
+                for x in range(self.rotatedCount,smalVal+self.rotatedCount):
+                    if self.screen[y][x]==1:
+                        print("#", end='')
+                    else:
+                        print(" ", end='')
+                print("")
+            
+            self.rotatedCount +=1
 
 
     def joinLists(self, x,y):
@@ -312,7 +312,7 @@ myDisplay = display()
 myDisplay.stringSet("BIG DICKS R US!") 
 myDisplay.printScreen()
 
-Thread(target=myDisplay.rotate()).start()
+Thread(target=myDisplay.rotate(1)).start()
 
 
 
