@@ -29,7 +29,11 @@ class display:
         self.displaySize = displays*8
     
     def setRotateDelay(self,speed):
-        self.rotateDelay = speed
+        if(speed>=0):
+            self.rotateDelay = speed
+            return 0
+        else:
+            return -1
     
 
     def rotate(self,toRotate = -1):
@@ -75,6 +79,16 @@ class display:
     def stringSet(self,stringg):
         self.string = stringg
         self.screen = [[0],[0],[0],[0],[0],[0],[0],[0]]
+        self.screenWidth=1
+        for c in self.string:
+            if c in character.keys():                
+                self.screen = [x+y for x,y in zip(self.screen,character[c].displayArray)]
+                self.screenWidth += character[c].width 
+
+    def stringSetRotate(self,stringg):
+        self.string = stringg
+        self.screen = [[0],[0],[0],[0],[0],[0],[0],[0]]
+        self.screenWidth=1
         for x in range(0, self.displaySize):
             self.screen = [x+y for x,y in zip(self.screen,character["VLine"].displayArray)]
             self.screenWidth += character["VLine"].width 
@@ -307,12 +321,6 @@ character = {
                         [1,1,1,1,1,0],
                         [0,0,0,0,0,0]]), 
 }
-
-myDisplay = display()
-myDisplay.stringSet("BIG DICKS R US!") 
-myDisplay.printScreen()
-
-Thread(target=myDisplay.rotate(1)).start()
 
 
 
